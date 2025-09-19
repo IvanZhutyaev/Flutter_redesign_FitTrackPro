@@ -54,8 +54,8 @@ class MainScreen extends StatelessWidget {
                           children: [
                             const _OutlinedText(
                               text: 'FITNESS\nTRACKER',
-                              fontSize: 26,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 32, // Увеличили размер шрифта
+                              fontWeight: FontWeight.w800, // Сделали жирнее
                             ),
                             const SizedBox(height: 6),
                             const _OutlinedText(
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
                       ),
                       Positioned(
                         top: 0,
-                        right: 0,
+                        right: -10, // Сдвинули правее
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
@@ -129,6 +129,7 @@ class MainScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Expanded(
+                                flex: 5, // Уменьшили пропорцию для Workouts
                                 child: AspectRatio(
                                   aspectRatio: 1.7,
                                   child: const _CardItem(
@@ -137,8 +138,9 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 12), // Уменьшили отступ
                               Expanded(
+                                flex: 4, // Уменьшили пропорцию для Nutrition
                                 child: AspectRatio(
                                   aspectRatio: 1.7,
                                   child: const _CardItem(
@@ -260,6 +262,7 @@ class _StepsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10), // Подняли карточку выше
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -271,7 +274,7 @@ class _StepsCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.circle, size: 20, color: Color(0xFFD46C3B)),
+            Icon(Icons.circle, size: 28, color: Color(0xFFD46C3B)), // Увеличили иконку
             SizedBox(height: 14),
             Text(
               '7,120',
