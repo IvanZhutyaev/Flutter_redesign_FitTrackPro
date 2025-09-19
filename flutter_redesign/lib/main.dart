@@ -19,169 +19,146 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Параметры, которые можно быстро настроить:
     const double navBarHeight = 80.0;
     const double fabDiameter = 64.0;
     const double fabRadius = fabDiameter / 2;
-    const double greenPeek = 40.0; // сколько зелёного видно над нижней панелью
-    final double beigeBottom = navBarHeight + greenPeek;
 
     return Scaffold(
-      // Базовый фон — зелёный (нижний слой)
       body: Stack(
         children: [
-          // 1) Зеленый фон (базовый)
-          Container(color: const Color(0xFF446E67)),
-
-          // 2) Оранжевая фигура (полукруг) снизу слева — расположена выше нижней панели
-          Positioned(
-            bottom: navBarHeight + 10, // находится над нижней панелью (не входит в неё)
-            left: -80,
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                color: const Color(0xFFD49A5D),
-                borderRadius: BorderRadius.circular(200),
+          /// 📷 ФОНОВОЕ ФОТО
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/bg.jpg"), // замени на своё фото
+                fit: BoxFit.cover,
               ),
             ),
           ),
 
-          // 3) Бежевый блок, который перекрывает ~90% экрана сверху
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: beigeBottom, // оставляем полосу (greenPeek) над нижней панелью
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFFFDFBF7),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          /// Контент
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // HEADER
+                  Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      // HEADER: текст + аватар (аватар визуально выше текста)
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          // текстовая часть с отступом сверху
-                          const Padding(
-                            padding: EdgeInsets.only(top: 34, right: 80),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'FITNESS\nTRACKER',
-                                  style: TextStyle(
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                    height: 1.15,
-                                  ),
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  'Your personal trainer and nutritionist',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // аватарка — выше текста (Positioned top: 0)
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              radius: 28,
-                              backgroundColor: const Color(0xFFE0E0E0),
-                              child: const Icon(Icons.person, size: 28, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 28),
-
-                      // Длинная "Start Workout" кнопка (высокая)
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 28),
-                            backgroundColor: const Color(0xFFD49A5D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text(
-                            'Start Workout',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 28),
-
-                      // Вкладки: Steps слева, Workouts+Nutrition справа
-                      Expanded(
-                        child: Row(
+                      Padding(
+                        padding: const EdgeInsets.only(top: 34, right: 80),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Steps (левая большая вертикальная карточка)
-                            Expanded(
-                              flex: 1,
-                              child: _StepsCard(),
+                            const _OutlinedText(
+                              text: 'FITNESS\nTRACKER',
+                              fontSize: 26,
+                              fontWeight: FontWeight.w700,
                             ),
-
-                            const SizedBox(width: 16),
-
-                            // Правая колонка: две карточки одна на другую, вместе равны высоте Steps
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: const [
-                                  Expanded(
-                                    child: _CardItem(
-                                      title: 'Workouts',
-                                      icon: Icons.fitness_center,
-                                    ),
-                                  ),
-                                  SizedBox(height: 16),
-                                  Expanded(
-                                    child: _CardItem(
-                                      title: 'Nutrition',
-                                      icon: Icons.local_pizza,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            const SizedBox(height: 6),
+                            const _OutlinedText(
+                              text: 'Your personal trainer and nutritionist',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
                             ),
                           ],
                         ),
                       ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 28,
+                          backgroundColor: Colors.white,
+                          child: const Icon(
+                            Icons.person,
+                            size: 28,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 28),
+
+                  // Кнопка Start Workout
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 28),
+                        backgroundColor: const Color(0xFFD49A5D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        elevation: 4,
+                      ),
+                      child: const Text(
+                        'Start Workout',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // 📊 КАРТОЧКИ (адаптивные)
+                  Expanded(
+                    child: Row(
+                      children: [
+                        /// Steps
+                        Flexible(
+                          flex: 1,
+                          child: AspectRatio(
+                            aspectRatio: 0.85,
+                            child: const _StepsCard(),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+
+                        /// Workouts + Nutrition
+                        Flexible(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: AspectRatio(
+                                  aspectRatio: 1.7,
+                                  child: const _CardItem(
+                                    title: 'Workouts',
+                                    icon: Icons.fitness_center,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Expanded(
+                                child: AspectRatio(
+                                  aspectRatio: 1.7,
+                                  child: const _CardItem(
+                                    title: 'Nutrition',
+                                    icon: Icons.local_pizza,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
 
-          // 4) Нижняя панель (внизу экрана)
+          /// ⚪ Нижняя панель
           Positioned(
             left: 0,
             right: 0,
@@ -191,7 +168,11 @@ class MainScreen extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Color(0xFFFDFBF7),
                 boxShadow: [
-                  BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, -2))
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6,
+                    offset: Offset(0, -2),
+                  ),
                 ],
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24),
@@ -202,16 +183,16 @@ class MainScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
                   Icon(Icons.home, size: 28, color: Colors.black87),
-                  SizedBox(width: 60), // место под FAB
+                  SizedBox(width: 60),
                   Icon(Icons.bar_chart, size: 28, color: Colors.black87),
                 ],
               ),
             ),
           ),
 
-          // 5) FAB — наполовину в нижней панели, наполовину над фоном
+          /// ➕ FAB (наполовину в панели)
           Positioned(
-            bottom: navBarHeight - fabRadius, // половина внутри нижней панели
+            bottom: navBarHeight - fabRadius,
             left: 0,
             right: 0,
             child: Center(
@@ -232,20 +213,60 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-/// Большая карточка Steps (левая)
+/// 🔤 Виджет с белым текстом + чёрная обводка
+class _OutlinedText extends StatelessWidget {
+  final String text;
+  final double fontSize;
+  final FontWeight fontWeight;
+
+  const _OutlinedText({
+    required this.text,
+    required this.fontSize,
+    required this.fontWeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 2
+              ..color = Colors.black,
+          ),
+        ),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 🟠 Steps карточка
 class _StepsCard extends StatelessWidget {
   const _StepsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // чтобы карточка "не выходила" и соответствовала размерам
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(2, 2))],
+        boxShadow: const [
+          BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(2, 2)),
+        ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -263,10 +284,7 @@ class _StepsCard extends StatelessWidget {
             SizedBox(height: 6),
             Text(
               'steps',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
           ],
         ),
@@ -275,7 +293,7 @@ class _StepsCard extends StatelessWidget {
   }
 }
 
-/// Универсальная карточка (Workouts / Nutrition)
+/// ⚪ Workouts / Nutrition карточки
 class _CardItem extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -288,7 +306,9 @@ class _CardItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(2, 2))],
+        boxShadow: const [
+          BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(2, 2)),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -297,7 +317,11 @@ class _CardItem extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
