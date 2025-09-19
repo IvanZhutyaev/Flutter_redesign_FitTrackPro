@@ -30,7 +30,7 @@ class MainScreen extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/bg.jpg"), // замени на своё фото
+                image: AssetImage("assets/bg.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -54,8 +54,8 @@ class MainScreen extends StatelessWidget {
                           children: [
                             const _OutlinedText(
                               text: 'FITNESS\nTRACKER',
-                              fontSize: 32, // Увеличили размер шрифта
-                              fontWeight: FontWeight.w800, // Сделали жирнее
+                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
                             ),
                             const SizedBox(height: 6),
                             const _OutlinedText(
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
                       ),
                       Positioned(
                         top: 0,
-                        right: -10, // Сдвинули правее
+                        right: -15,
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
@@ -109,44 +109,129 @@ class MainScreen extends StatelessWidget {
 
                   const SizedBox(height: 28),
 
-                  // 📊 КАРТОЧКИ (адаптивные)
+                  // 📊 КАРТОЧКИ
                   Expanded(
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// Steps
-                        Flexible(
-                          flex: 1,
-                          child: AspectRatio(
-                            aspectRatio: 0.85,
-                            child: const _StepsCard(),
+                        // Steps карточка
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            height: 180,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 6,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 32,
+                                  color: Color(0xFFD46C3B),
+                                ),
+                                SizedBox(height: 14),
+                                Text(
+                                  '7,120',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  'steps',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(width: 16),
 
-                        /// Workouts + Nutrition
-                        Flexible(
-                          flex: 1,
+                        // Workouts + Nutrition
+                        Expanded(
                           child: Column(
                             children: [
-                              Expanded(
-                                flex: 5, // Уменьшили пропорцию для Workouts
-                                child: AspectRatio(
-                                  aspectRatio: 1.7,
-                                  child: const _CardItem(
-                                    title: 'Workouts',
-                                    icon: Icons.fitness_center,
-                                  ),
+                              // Workouts
+                              Container(
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset(2, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.fitness_center,
+                                      size: 32,
+                                      color: Color(0xFFD46C3B),
+                                    ),
+                                    SizedBox(height: 14),
+                                    Text(
+                                      'Workouts',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 12), // Уменьшили отступ
-                              Expanded(
-                                flex: 4, // Уменьшили пропорцию для Nutrition
-                                child: AspectRatio(
-                                  aspectRatio: 1.7,
-                                  child: const _CardItem(
-                                    title: 'Nutrition',
-                                    icon: Icons.local_pizza,
-                                  ),
+                              const SizedBox(height: 12),
+                              // Nutrition
+                              Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset(2, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.local_pizza,
+                                      size: 32,
+                                      color: Color(0xFFD46C3B),
+                                    ),
+                                    SizedBox(height: 14),
+                                    Text(
+                                      'Nutrition',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -251,83 +336,6 @@ class _OutlinedText extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// 🟠 Steps карточка
-class _StepsCard extends StatelessWidget {
-  const _StepsCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10), // Подняли карточку выше
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(2, 2)),
-        ],
-      ),
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.circle, size: 28, color: Color(0xFFD46C3B)), // Увеличили иконку
-            SizedBox(height: 14),
-            Text(
-              '7,120',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 6),
-            Text(
-              'steps',
-              style: TextStyle(fontSize: 16, color: Colors.black54),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// ⚪ Workouts / Nutrition карточки
-class _CardItem extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const _CardItem({super.key, required this.title, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(2, 2)),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 32, color: const Color(0xFFD46C3B)),
-          const SizedBox(height: 14),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
