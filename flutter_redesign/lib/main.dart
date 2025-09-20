@@ -52,23 +52,29 @@ class MainScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const _OutlinedText(
-                              text: 'FITNESS\nTRACKER',
-                              fontSize: 40, // стало больше
-                              fontWeight: FontWeight.w800,
+                            const Text(
+                              'FITNESS TRACKER',
+                              style: TextStyle(
+                                fontSize: 44, // увеличен размер
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black, // черный цвет без обводки
+                              ),
                             ),
                             const SizedBox(height: 6),
-                            const _OutlinedText(
-                              text: 'Your personal trainer and nutritionist',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                            const Text(
+                              'Your personal trainer and nutritionist',
+                              style: TextStyle(
+                                fontSize: 18, // увеличен размер
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black, // черный цвет без обводки
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Positioned(
                         top: 0,
-                        right: -30, // дальше от центра, ближе к краю
+                        right: -10, // ближе к центру
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
@@ -99,7 +105,7 @@ class MainScreen extends StatelessWidget {
                       child: const Text(
                         'Start Workout',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 24, // увеличен размер
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
@@ -135,14 +141,14 @@ class MainScreen extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.circle,
-                                  size: 32,
+                                  size: 36, // увеличен размер
                                   color: Color(0xFFD46C3B),
                                 ),
                                 SizedBox(height: 14),
                                 Text(
                                   '7,120',
                                   style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 32, // увеличен размер
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
@@ -151,7 +157,7 @@ class MainScreen extends StatelessWidget {
                                 Text(
                                   'steps',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18, // увеличен размер
                                     color: Colors.black54,
                                   ),
                                 ),
@@ -185,14 +191,14 @@ class MainScreen extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.fitness_center,
-                                      size: 32,
+                                      size: 36, // увеличен размер
                                       color: Color(0xFFD46C3B),
                                     ),
                                     SizedBox(height: 14),
                                     Text(
                                       'Workouts',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18, // увеличен размер
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
@@ -221,14 +227,14 @@ class MainScreen extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.local_pizza,
-                                      size: 32,
+                                      size: 36, // увеличен размер
                                       color: Color(0xFFD46C3B),
                                     ),
                                     SizedBox(height: 14),
                                     Text(
                                       'Nutrition',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18, // увеличен размер
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
@@ -271,15 +277,15 @@ class MainScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
-                  Icon(Icons.home, size: 28, color: Colors.black87),
+                  Icon(Icons.home, size: 32, color: Colors.black87), // увеличен размер
                   SizedBox(width: 60),
-                  Icon(Icons.bar_chart, size: 28, color: Colors.black87),
+                  Icon(Icons.bar_chart, size: 32, color: Colors.black87), // увеличен размер
                 ],
               ),
             ),
           ),
 
-          /// ➕ FAB (наполовину в панели)
+          /// ➕ FAB (наполовину в панели) - теперь круглая
           Positioned(
             bottom: navBarHeight - fabRadius,
             left: 0,
@@ -291,6 +297,7 @@ class MainScreen extends StatelessWidget {
                 child: FloatingActionButton(
                   onPressed: () {},
                   backgroundColor: const Color(0xFF446E67),
+                  shape: const CircleBorder(), // делаем круглой
                   child: const Icon(Icons.add, size: 32, color: Colors.white),
                 ),
               ),
@@ -298,46 +305,6 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// 🔤 Виджет с белым текстом + чёрная обводка
-class _OutlinedText extends StatelessWidget {
-  final String text;
-  final double fontSize;
-  final FontWeight fontWeight;
-
-  const _OutlinedText({
-    required this.text,
-    required this.fontSize,
-    required this.fontWeight,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = 2
-              ..color = Colors.black,
-          ),
-        ),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            color: Colors.white,
-          ),
-        ),
-      ],
     );
   }
 }
