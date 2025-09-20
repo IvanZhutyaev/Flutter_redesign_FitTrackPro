@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'catalog.dart'; // ✅ импортируем страницу
 
 void main() => runApp(const FitnessApp());
 
@@ -51,8 +52,8 @@ class MainScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 34, right: 120),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'FITNESS TRACKER',
                               style: TextStyle(
                                 fontSize: 44,
@@ -60,8 +61,8 @@ class MainScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            const SizedBox(height: 6),
-                            const Text(
+                            SizedBox(height: 6),
+                            Text(
                               'Your personal trainer and nutritionist',
                               style: TextStyle(
                                 fontSize: 18,
@@ -78,7 +79,7 @@ class MainScreen extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
-                          child: const Icon(
+                          child: Icon(
                             Icons.person,
                             size: 28,
                             color: Colors.black87,
@@ -276,10 +277,26 @@ class MainScreen extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  Icon(Icons.home, size: 32, color: Colors.black87),
-                  SizedBox(width: 60),
-                  Icon(Icons.bar_chart, size: 32, color: Colors.black87),
+                children: [
+                  const Icon(Icons.home, size: 32, color: Colors.black87),
+                  const SizedBox(width: 60),
+
+                  /// 🔹 Кнопка для перехода
+                  IconButton(
+                    icon: const Icon(
+                      Icons.bar_chart,
+                      size: 32,
+                      color: Colors.black87,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CatalogPage(),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
