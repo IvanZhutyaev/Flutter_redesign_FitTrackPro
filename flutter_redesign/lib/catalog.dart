@@ -61,6 +61,21 @@ class CatalogPage extends StatelessWidget {
                         subtitle: "Food diary, calorie calculation",
                         iconColor: Colors.red,
                       ),
+                      SizedBox(height: 16),
+                      _CatalogCard(
+                        icon: Icons.timeline,
+                        title: "Progress",
+                        subtitle:
+                            "Track your fitness progress and achievements",
+                        iconColor: Colors.purple,
+                      ),
+                      SizedBox(height: 16),
+                      _CatalogCard(
+                        icon: Icons.settings,
+                        title: "Settings",
+                        subtitle: "App preferences and configuration",
+                        iconColor: Colors.blue,
+                      ),
                     ],
                   ),
                 ),
