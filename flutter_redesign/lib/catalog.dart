@@ -14,72 +14,73 @@ class CatalogPage extends StatelessWidget {
 
           /// Контент
           SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(height: 1),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
 
-                /// Аватар
-                Center(
-                  child: Image.asset(
-                    "assets/catalog_avatar.png",
-                    width: 230,
-                    height: 230,
+                  /// Аватар
+                  Center(
+                    child: Image.asset(
+                      "assets/catalog_avatar.png",
+                      width: 180,
+                      height: 180,
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 1),
+                  const SizedBox(height: 8),
 
-                /// Карточки каталога
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: const [
-                      _CatalogCard(
-                        icon: Icons.person,
-                        title: "Profile",
-                        subtitle: "Personal data, goals, avatar",
-                        iconColor: Colors.amber,
-                      ),
-                      SizedBox(height: 16),
-                      _CatalogCard(
-                        icon: Icons.fitness_center,
-                        title: "Workouts",
-                        subtitle: "Exercise catalog, create programs",
-                        iconColor: Colors.orange,
-                      ),
-                      SizedBox(height: 16),
-                      _CatalogCard(
-                        icon: Icons.directions_walk,
-                        title: "Activity",
-                        subtitle: "Step counting, activity charts",
-                        iconColor: Colors.green,
-                      ),
-                      SizedBox(height: 16),
-                      _CatalogCard(
-                        icon: Icons.restaurant,
-                        title: "Nutrition",
-                        subtitle: "Food diary, calorie calculation",
-                        iconColor: Colors.red,
-                      ),
-                      SizedBox(height: 16),
-                      _CatalogCard(
-                        icon: Icons.timeline,
-                        title: "Progress",
-                        subtitle:
-                            "Track your fitness progress and achievements",
-                        iconColor: Colors.purple,
-                      ),
-                      SizedBox(height: 16),
-                      _CatalogCard(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        subtitle: "App preferences and configuration",
-                        iconColor: Colors.blue,
-                      ),
-                    ],
+                  /// Карточки каталога
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: const [
+                        _CatalogCard(
+                          icon: Icons.person,
+                          title: "Profile",
+                          subtitle: "Personal data, goals, avatar",
+                          iconColor: Colors.amber,
+                        ),
+                        SizedBox(height: 12),
+                        _CatalogCard(
+                          icon: Icons.fitness_center,
+                          title: "Workouts",
+                          subtitle: "Exercise catalog, create programs",
+                          iconColor: Colors.orange,
+                        ),
+                        SizedBox(height: 12),
+                        _CatalogCard(
+                          icon: Icons.directions_walk,
+                          title: "Activity",
+                          subtitle: "Step counting, activity charts",
+                          iconColor: Colors.green,
+                        ),
+                        SizedBox(height: 12),
+                        _CatalogCard(
+                          icon: Icons.restaurant,
+                          title: "Nutrition",
+                          subtitle: "Food diary, calorie calculation",
+                          iconColor: Colors.red,
+                        ),
+                        SizedBox(height: 12),
+                        _CatalogCard(
+                          icon: Icons.timeline,
+                          title: "Progress",
+                          subtitle: "Track your fitness progress",
+                          iconColor: Colors.purple,
+                        ),
+                        SizedBox(height: 12),
+                        _CatalogCard(
+                          icon: Icons.settings,
+                          title: "Settings",
+                          subtitle: "App preferences and configuration",
+                          iconColor: Colors.blue,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -106,7 +107,7 @@ class _CatalogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -114,8 +115,8 @@ class _CatalogCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 36, color: iconColor),
-          const SizedBox(width: 16),
+          Icon(icon, size: 30, color: iconColor),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,13 +124,13 @@ class _CatalogCard extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                  style: const TextStyle(fontSize: 12, color: Colors.black54),
                 ),
               ],
             ),
