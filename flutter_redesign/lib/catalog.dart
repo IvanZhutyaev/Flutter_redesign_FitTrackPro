@@ -16,17 +16,17 @@ class CatalogPage extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 Center(
                   child: Image.asset(
                     "assets/catalog_avatar.png",
-                    width: 300,
-                    height: 300,
+                    width: 400,
+                    height: 400,
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
 
                 /// Карточки каталога
                 Expanded(
