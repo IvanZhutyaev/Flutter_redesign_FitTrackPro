@@ -16,54 +16,52 @@ class CatalogPage extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 2),
+                const SizedBox(height: 24),
 
+                /// Аватар
                 Center(
                   child: Image.asset(
                     "assets/catalog_avatar.png",
-                    width: 400,
-                    height: 400,
+                    width: 140,
+                    height: 140,
                   ),
                 ),
 
-                const SizedBox(height: 2),
+                const SizedBox(height: 24),
 
                 /// Карточки каталога
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        _CatalogCard(
-                          icon: Icons.person,
-                          title: "Profile",
-                          subtitle: "Personal data, goals, avatar",
-                          iconColor: Colors.amber,
-                        ),
-                        SizedBox(height: 16),
-                        _CatalogCard(
-                          icon: Icons.fitness_center,
-                          title: "Workouts",
-                          subtitle: "Exercise catalog, create programs",
-                          iconColor: Colors.orange,
-                        ),
-                        SizedBox(height: 16),
-                        _CatalogCard(
-                          icon: Icons.directions_walk,
-                          title: "Activity",
-                          subtitle: "Step counting, activity charts",
-                          iconColor: Colors.green,
-                        ),
-                        SizedBox(height: 16),
-                        _CatalogCard(
-                          icon: Icons.restaurant, // заменил на универсальный
-                          title: "Nutrition",
-                          subtitle: "Food diary, calorie calculation",
-                          iconColor: Colors.red,
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: const [
+                      _CatalogCard(
+                        icon: Icons.person,
+                        title: "Profile",
+                        subtitle: "Personal data, goals, avatar",
+                        iconColor: Colors.amber,
+                      ),
+                      SizedBox(height: 16),
+                      _CatalogCard(
+                        icon: Icons.fitness_center,
+                        title: "Workouts",
+                        subtitle: "Exercise catalog, create programs",
+                        iconColor: Colors.orange,
+                      ),
+                      SizedBox(height: 16),
+                      _CatalogCard(
+                        icon: Icons.directions_walk,
+                        title: "Activity",
+                        subtitle: "Step counting, activity charts",
+                        iconColor: Colors.green,
+                      ),
+                      SizedBox(height: 16),
+                      _CatalogCard(
+                        icon: Icons.restaurant,
+                        title: "Nutrition",
+                        subtitle: "Food diary, calorie calculation",
+                        iconColor: Colors.red,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -95,7 +93,7 @@ class _CatalogCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white, // 🔹 непрозрачный фон
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.black.withOpacity(0.2)),
       ),
