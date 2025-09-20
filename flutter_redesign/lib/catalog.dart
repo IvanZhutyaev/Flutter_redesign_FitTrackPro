@@ -16,7 +16,7 @@ class CatalogPage extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 2),
 
                 Center(
                   child: Image.asset(
@@ -26,7 +26,7 @@ class CatalogPage extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 2),
 
                 /// Карточки каталога
                 Expanded(
