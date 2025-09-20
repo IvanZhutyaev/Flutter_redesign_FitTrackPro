@@ -48,13 +48,13 @@ class MainScreen extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 34, right: 80),
+                        padding: const EdgeInsets.only(top: 34, right: 120),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const _OutlinedText(
                               text: 'FITNESS\nTRACKER',
-                              fontSize: 32,
+                              fontSize: 40, // стало больше
                               fontWeight: FontWeight.w800,
                             ),
                             const SizedBox(height: 6),
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
                       ),
                       Positioned(
                         top: 0,
-                        right: -15,
+                        right: -30, // дальше от центра, ближе к краю
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
@@ -161,12 +161,13 @@ class MainScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 16),
 
-                        // Workouts + Nutrition
+                        // Workouts + Nutrition (шире, совпадает со Steps)
                         Expanded(
                           child: Column(
                             children: [
                               // Workouts
                               Container(
+                                width: double.infinity, // растягивается
                                 height: 140,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -202,6 +203,7 @@ class MainScreen extends StatelessWidget {
                               const SizedBox(height: 12),
                               // Nutrition
                               Container(
+                                width: double.infinity, // растягивается
                                 height: 100,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
