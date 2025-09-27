@@ -187,38 +187,48 @@ class MainScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               // Workouts
-                              Container(
-                                width: double.infinity,
-                                height: 140,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 6,
-                                      offset: Offset(2, 2),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const WorkoutsPage(),
                                     ),
-                                  ],
-                                ),
-                                child: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.fitness_center,
-                                      size: 36,
-                                      color: Color(0xFFD46C3B),
-                                    ),
-                                    SizedBox(height: 14),
-                                    Text(
-                                      'Workouts',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 140,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6,
+                                        offset: Offset(2, 2),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.fitness_center,
+                                        size: 36,
+                                        color: Color(0xFFD46C3B),
+                                      ),
+                                      SizedBox(height: 14),
+                                      Text(
+                                        'Workouts',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 12),
