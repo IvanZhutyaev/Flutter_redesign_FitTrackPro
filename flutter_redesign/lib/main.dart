@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'catalog.dart'; // ✅ импортируем страницу
+import 'catalog.dart'; 
+import 'profile.dart';
 
 void main() => runApp(const FitnessApp());
 
