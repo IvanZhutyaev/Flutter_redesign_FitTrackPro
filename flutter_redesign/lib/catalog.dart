@@ -14,73 +14,99 @@ class CatalogPage extends StatelessWidget {
 
           /// Контент
           SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 8),
+            child: Stack(
+              children: [
+                // Основное содержимое — сначала, чтобы занимать место "под" кнопкой
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
 
-                  /// Аватар
-                  Center(
-                    child: Image.asset(
-                      "assets/catalog_avatar.png",
-                      width: 180,
-                      height: 180,
+                      /// Аватар
+                      Center(
+                        child: Image.asset(
+                          "assets/catalog_avatar.png",
+                          width: 180,
+                          height: 180,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      /// Карточки каталога
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: const [
+                            _CatalogCard(
+                              icon: Icons.person,
+                              title: "Profile",
+                              subtitle: "Personal data, goals, avatar",
+                              iconColor: Colors.amber,
+                            ),
+                            SizedBox(height: 12),
+                            _CatalogCard(
+                              icon: Icons.fitness_center,
+                              title: "Workouts",
+                              subtitle: "Exercise catalog, create programs",
+                              iconColor: Colors.orange,
+                            ),
+                            SizedBox(height: 12),
+                            _CatalogCard(
+                              icon: Icons.directions_walk,
+                              title: "Activity",
+                              subtitle: "Step counting, activity charts",
+                              iconColor: Colors.green,
+                            ),
+                            SizedBox(height: 12),
+                            _CatalogCard(
+                              icon: Icons.restaurant,
+                              title: "Nutrition",
+                              subtitle: "Food diary, calorie calculation",
+                              iconColor: Colors.red,
+                            ),
+                            SizedBox(height: 12),
+                            _CatalogCard(
+                              icon: Icons.timeline,
+                              title: "Progress",
+                              subtitle: "Track your fitness progress",
+                              iconColor: Colors.purple,
+                            ),
+                            SizedBox(height: 12),
+                            _CatalogCard(
+                              icon: Icons.settings,
+                              title: "Settings",
+                              subtitle: "App preferences and configuration",
+                              iconColor: Colors.blue,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Кнопка назад поверх всего (позиционируем последней — она сверху)
+                Positioned(
+                  left: 12,
+                  top: 12,
+                  child: ClipOval(
+                    child: Material(
+                      color: Colors.white.withOpacity(0.9), // фон кнопки
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: Icon(Icons.arrow_back, color: Colors.black87, size: 28),
+                        ),
+                      ),
                     ),
                   ),
-
-                  const SizedBox(height: 8),
-
-                  /// Карточки каталога
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: const [
-                        _CatalogCard(
-                          icon: Icons.person,
-                          title: "Profile",
-                          subtitle: "Personal data, goals, avatar",
-                          iconColor: Colors.amber,
-                        ),
-                        SizedBox(height: 12),
-                        _CatalogCard(
-                          icon: Icons.fitness_center,
-                          title: "Workouts",
-                          subtitle: "Exercise catalog, create programs",
-                          iconColor: Colors.orange,
-                        ),
-                        SizedBox(height: 12),
-                        _CatalogCard(
-                          icon: Icons.directions_walk,
-                          title: "Activity",
-                          subtitle: "Step counting, activity charts",
-                          iconColor: Colors.green,
-                        ),
-                        SizedBox(height: 12),
-                        _CatalogCard(
-                          icon: Icons.restaurant,
-                          title: "Nutrition",
-                          subtitle: "Food diary, calorie calculation",
-                          iconColor: Colors.red,
-                        ),
-                        SizedBox(height: 12),
-                        _CatalogCard(
-                          icon: Icons.timeline,
-                          title: "Progress",
-                          subtitle: "Track your fitness progress",
-                          iconColor: Colors.purple,
-                        ),
-                        SizedBox(height: 12),
-                        _CatalogCard(
-                          icon: Icons.settings,
-                          title: "Settings",
-                          subtitle: "App preferences and configuration",
-                          iconColor: Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

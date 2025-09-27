@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'catalog.dart'; 
+import 'catalog.dart';
 import 'profile.dart';
 
 void main() => runApp(const FitnessApp());
@@ -74,16 +74,28 @@ class MainScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+
+                      /// 🔹 Кнопка профиля
                       Positioned(
                         top: 0,
                         right: -10,
                         child: CircleAvatar(
                           radius: 28,
                           backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            size: 28,
-                            color: Colors.black87,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.person,
+                              size: 28,
+                              color: Colors.black87,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfilePage(),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
