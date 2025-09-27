@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'catalog.dart';
 import 'profile.dart';
+import 'workouts.dart';
 
 void main() => runApp(const FitnessApp());
 
