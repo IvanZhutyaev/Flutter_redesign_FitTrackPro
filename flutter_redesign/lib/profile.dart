@@ -11,7 +11,7 @@ class ProfilePage extends StatelessWidget {
           /// Фон
           Positioned.fill(
             child: Image.asset(
-              "assets/profile_background.png", // ваш png-фон
+              "assets/profile_background.png",
               fit: BoxFit.cover,
             ),
           ),
@@ -36,23 +36,24 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
 
-                /// Заголовок + Фото
+                /// Контент
                 Expanded(
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 8),
-
-                        Text(
+                        /// Заголовок
+                        const Text(
                           "Profile",
-                          style: const TextStyle(
-                            fontSize: 28,
+                          style: TextStyle(
+                            fontSize: 34,
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                           ),
                         ),
 
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 20),
 
                         /// Фото профиля + кнопка смены
                         Center(
@@ -84,11 +85,11 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 24),
 
                         /// Personal Data
                         Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.9),
@@ -100,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                               const Text(
                                 "Personal Data",
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
                                 ),
@@ -115,11 +116,11 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 24),
 
                         /// My Goals
                         Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: Colors.yellow.shade100.withOpacity(0.9),
@@ -131,30 +132,19 @@ class ProfilePage extends StatelessWidget {
                               const Text(
                                 "My Goals",
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 16),
 
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _buildInfoRow(
-                                      "Goal Weight",
-                                      "70 kg",
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: _buildInfoRow(
-                                      "Current Goal",
-                                      "Select duration",
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              /// Goal Weight
+                              _buildInfoRow("Goal Weight", "70 kg", vertical: true),
+                              const SizedBox(height: 16),
+
+                              /// Current Goal
+                              _buildInfoRow("Current Goal", "Select duration", vertical: true),
                             ],
                           ),
                         ),
@@ -197,18 +187,20 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  /// Универсальный ряд (может быть горизонтальный или вертикальный)
+  Widget _buildInfoRow(String title, String value, {bool vertical = false}) {
+    if (vertical) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(fontSize: 16, color: Colors.black87),
           ),
+          const SizedBox(height: 6),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(6),
@@ -220,7 +212,37 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 16, color: Colors.black87),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 15, color: Colors.black87),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
