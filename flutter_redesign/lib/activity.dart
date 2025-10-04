@@ -1,331 +1,245 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const ActivityApp());
-}
-
-class ActivityApp extends StatelessWidget {
-  const ActivityApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Activity',
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.transparent,
-        fontFamily: 'Roboto',
-      ),
-      home: const ActivityPage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class ActivityPage extends StatelessWidget {
+class ActivityPage extends StatefulWidget {
   const ActivityPage({super.key});
 
-  // Цвета подобраны под картинку (примерно)
-  static const Color cream = Color(0xFFFBF5E6);
-  static const Color deepGreen = Color(0xFF0F2E2A);
-  static const Color softYellow = Color(0xFFF7E9B9);
-  static const Color accentOrange = Color(0xFFDE6A14);
-  static const Color paleBox = Color(0xFFFFF7E0);
+  @override
+  State<ActivityPage> createState() => _ActivityPageState();
+}
+
+class _ActivityPageState extends State<ActivityPage> {
+  bool syncGoogleFit = true;
+  bool syncAppleHealth = false;
 
   @override
   Widget build(BuildContext context) {
-    // Размеры рассчитываем от ширины экрана, чтобы поведение было предсказуемым
-    final w = MediaQuery.of(context).size.width;
-    final horizontalPadding = 20.0;
-
     return Scaffold(
-      // фон берём из assets
       body: Stack(
         children: [
-          // background image
+          /// 📷 Фон из assets
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/activitybg.jpg'),
+                image: AssetImage("assets/activity_background.jpg"),
                 fit: BoxFit.cover,
-                alignment: Alignment.center,
               ),
             ),
           ),
+
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
-                  // Заголовок и иконка
+                  /// 🔙 Назад + Иконка + Заголовок
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // маленький человек (иконка)
-                      Container(
-                        width: 36,
-                        height: 36,
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Icons.directions_walk_rounded,
-                          size: 26,
-                          color: deepGreen,
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 28,
+                          color: Colors.black87,
                         ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      const Icon(
+                        Icons.directions_run,
+                        size: 28,
+                        color: Colors.black87,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'Activity',
+                      const Text(
+                        "Activity",
                         style: TextStyle(
-                          color: deepGreen,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          height: 1.0,
+                          fontSize: 26, // уменьшенный размер
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 18),
-                  // Карточки Steps / Distance / Calories
+                  const SizedBox(height: 20),
+
+                  /// Статистика
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _StatCard(
-                        title: 'Steps',
-                        value: '0',
-                        width: (w - horizontalPadding * 2 - 24) / 3,
-                      ),
-                      _StatCard(
-                        title: 'Distance',
-                        value: '0 km',
-                        width: (w - horizontalPadding * 2 - 24) / 3,
-                      ),
-                      _StatCard(
-                        title: 'Calories',
-                        value: '0',
-                        width: (w - horizontalPadding * 2 - 24) / 3,
-                      ),
+                      _buildStatCard("Steps", "0"),
+                      _buildStatCard("Distance", "0 km"),
+                      _buildStatCard("Calories", "0"),
                     ],
                   ),
-                  const SizedBox(height: 14),
-                  // Text "0 steps of 70,000" and Progress bar and percent
-                  Text(
-                    '0 steps of 70,000',
-                    style: TextStyle(
-                      color: deepGreen,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // custom thin progress indicator
+
+                  const SizedBox(height: 20),
+
+                  /// Прогресс бар
                   Container(
-                    height: 8,
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: paleBox,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: 0.0, // 0% progress in the image
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: accentOrange,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text('0%', style: TextStyle(color: deepGreen, fontSize: 14)),
-                  const SizedBox(height: 18),
-                  // Activity Charts card
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: cream.withOpacity(0.95),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: deepGreen.withOpacity(0.25),
-                        width: 1.6,
-                      ),
-                      boxShadow: [
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.03),
-                          blurRadius: 6,
-                          offset: const Offset(0, 2),
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(2, 2),
                         ),
                       ],
                     ),
-                    padding: const EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Activity Charts',
+                        const Text("0 steps of 70,000"),
+                        const SizedBox(height: 6),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: LinearProgressIndicator(
+                            value: 0.0,
+                            minHeight: 6,
+                            backgroundColor: Colors.grey.shade300,
+                            color: Colors.orange,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        const Text("0%"),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  /// Activity Charts
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Activity Charts",
                           style: TextStyle(
-                            color: deepGreen,
                             fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 12),
-                        // Search/select period
                         Container(
-                          decoration: BoxDecoration(
-                            color: softYellow,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 10,
                           ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF6D9),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Row(
-                            children: [
-                              Icon(
-                                Icons.search,
-                                color: deepGreen.withOpacity(0.7),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Select period',
-                                style: TextStyle(
-                                  color: deepGreen.withOpacity(0.75),
-                                  fontSize: 14,
-                                ),
-                              ),
+                            children: const [
+                              Icon(Icons.search, color: Colors.black54),
+                              SizedBox(width: 8),
+                              Text("Select period"),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        // Empty chart area (pale rectangle)
-                        Container(
-                          height: 110,
-                          decoration: BoxDecoration(
-                            color: softYellow,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        // Day / Week buttons
+                        const SizedBox(height: 14),
+
+                        /// Переключатели Day / Week
                         Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  side: BorderSide(
-                                    color: deepGreen.withOpacity(0.2),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Day',
-                                  style: TextStyle(
-                                    color: deepGreen,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [_buildButton("Day"), _buildButton("Week")],
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        /// Заглушка под будущий график
+                        Container(
+                          height: 160,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Graph Placeholder",
+                              style: TextStyle(color: Colors.black54),
                             ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  side: BorderSide(
-                                    color: deepGreen.withOpacity(0.2),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Week',
-                                  style: TextStyle(
-                                    color: deepGreen,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  // Spacer to push bottom elements down
+
                   const Spacer(),
-                  // Bottom Sync Google Fit + toggle on the right
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0, right: 4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Left column text
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Sync',
-                              style: TextStyle(
-                                color: deepGreen,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Google Fit',
-                              style: TextStyle(
-                                color: deepGreen,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        // Toggle (orange background with white circular thumb)
-                        Container(
-                          width: 64,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            color: accentOrange,
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 6,
-                          ),
-                          child: Align(
-                            alignment: Alignment
-                                .centerRight, // toggle to the right (ON)
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+
+                  /// 🔹 Подзаголовок Sync
+                  const Text(
+                    "Sync",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  /// Синхронизация Google Fit
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Sync Google Fit",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Switch(
+                        value: syncGoogleFit,
+                        activeColor: Colors.orange,
+                        onChanged: (val) {
+                          setState(() {
+                            syncGoogleFit = val;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+
+                  /// Синхронизация Apple Health
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Sync Apple Health",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Switch(
+                        value: syncAppleHealth,
+                        activeColor: Colors.orange,
+                        onChanged: (val) {
+                          setState(() {
+                            syncAppleHealth = val;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -335,50 +249,38 @@ class ActivityPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class _StatCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final double width;
-  const _StatCard({
-    required this.title,
-    required this.value,
-    required this.width,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final Color deepGreen = const Color(0xFF0F2E2A);
+  /// Карточка статистики
+  Widget _buildStatCard(String title, String value) {
     return Container(
-      width: width,
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.92),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: deepGreen.withOpacity(0.25), width: 1.4),
+        border: Border.all(color: Colors.black26),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white.withOpacity(0.9),
       ),
       child: Column(
         children: [
           Text(
-            title,
-            style: TextStyle(
-              color: deepGreen.withOpacity(0.9),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
             value,
-            style: TextStyle(
-              color: deepGreen,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-            ),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
+          Text(title),
         ],
       ),
+    );
+  }
+
+  /// Кнопка Day / Week
+  static Widget _buildButton(String text) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () {},
+      child: Text(text),
     );
   }
 }
