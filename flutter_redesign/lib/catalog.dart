@@ -110,22 +110,40 @@ class CatalogPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Кнопка-робот справа снизу
+                Positioned(
+                  right: 20,
+                  bottom: 20,
+                  child: ClipOval(
+                    child: Material(
+                      color: Colors.white.withOpacity(0.95), // светлый фон
+                      elevation: 6,
+                      child: InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("🤖 Robot button pressed"),
+                            ),
+                          );
+                        },
+                        child: const SizedBox(
+                          width: 64, // больше чем стандартная FAB
+                          height: 64,
+                          child: Icon(
+                            Icons.smart_toy,
+                            color: Colors.deepPurple, // фиолетовый акцент
+                            size: 36,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ],
-      ),
-
-      /// Кнопка с роботом справа снизу
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
-        onPressed: () {
-          // тут действие при нажатии
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Robot button pressed 🤖")),
-          );
-        },
-        child: const Icon(Icons.smart_toy, size: 30), // иконка робота
       ),
     );
   }
