@@ -16,7 +16,7 @@ class CatalogPage extends StatelessWidget {
           SafeArea(
             child: Stack(
               children: [
-                // Основное содержимое — сначала, чтобы занимать место "под" кнопкой
+                // Основное содержимое
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -86,13 +86,13 @@ class CatalogPage extends StatelessWidget {
                   ),
                 ),
 
-                // Кнопка назад поверх всего (позиционируем последней — она сверху)
+                // Кнопка назад
                 Positioned(
                   left: 12,
                   top: 12,
                   child: ClipOval(
                     child: Material(
-                      color: Colors.white.withOpacity(0.9), // фон кнопки
+                      color: Colors.white.withOpacity(0.9),
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
@@ -100,7 +100,11 @@ class CatalogPage extends StatelessWidget {
                         child: const SizedBox(
                           width: 44,
                           height: 44,
-                          child: Icon(Icons.arrow_back, color: Colors.black87, size: 28),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black87,
+                            size: 28,
+                          ),
                         ),
                       ),
                     ),
@@ -110,6 +114,18 @@ class CatalogPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+
+      /// Кнопка с роботом справа снизу
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent,
+        onPressed: () {
+          // тут действие при нажатии
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Robot button pressed 🤖")),
+          );
+        },
+        child: const Icon(Icons.smart_toy, size: 30), // иконка робота
       ),
     );
   }
