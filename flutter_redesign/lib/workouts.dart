@@ -11,7 +11,7 @@ class WorkoutsPage extends StatelessWidget {
           // Фон
           Positioned.fill(
             child: Image.asset(
-              "assets/workouts_background.png", // твой png-файл в assets
+              "assets/workouts_background.png", // твой фон в assets
               fit: BoxFit.cover,
             ),
           ),
@@ -40,16 +40,13 @@ class WorkoutsPage extends StatelessWidget {
 
                   const SizedBox(height: 8),
 
-                  // Иконка с бицепсом
+                  // Иконка с бицепсом (без рамки)
                   Center(
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.orange.shade100,
-                      child: Image.asset(
-                        "assets/workouts_arm.png", // иконка с рукой
-                        width: 48,
-                        height: 48,
-                      ),
+                    child: Image.asset(
+                      "assets/workouts_arm.png",
+                      width: 200, // можно увеличить/уменьшить
+                      height: 200,
+                      fit: BoxFit.contain,
                     ),
                   ),
 
@@ -59,7 +56,7 @@ class WorkoutsPage extends StatelessWidget {
                   const Text(
                     "Workouts",
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1E1E1E),
                     ),
