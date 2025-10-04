@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'catalog.dart';
 import 'profile.dart';
 import 'workouts.dart';
+import 'activity.dart'; // 🔹 добавляем импорт
 
 void main() => runApp(const FitnessApp());
 
@@ -137,52 +138,62 @@ class MainScreen extends StatelessWidget {
                       children: [
                         // Steps карточка
                         Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 6,
-                                  offset: Offset(2, 2),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ActivityPage(),
                                 ),
-                              ],
-                            ),
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.circle,
-                                  size: 36,
-                                  color: Color(0xFFD46C3B),
-                                ),
-                                SizedBox(height: 14),
-                                Text(
-                                  '7,120',
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              height: 180,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 6,
+                                    offset: Offset(2, 2),
                                   ),
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  'steps',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black54,
+                                ],
+                              ),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.circle,
+                                    size: 36,
+                                    color: Color(0xFFD46C3B),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 14),
+                                  Text(
+                                    '7,120',
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    'steps',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 16),
 
-                        // Workouts + Nutrition (шире, совпадает со Steps)
+                        // Workouts + Nutrition
                         Expanded(
                           child: Column(
                             children: [
@@ -192,7 +203,8 @@ class MainScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const WorkoutsPage(),
+                                      builder: (context) =>
+                                          const WorkoutsPage(),
                                     ),
                                   );
                                 },
@@ -305,7 +317,7 @@ class MainScreen extends StatelessWidget {
                   const Icon(Icons.home, size: 32, color: Colors.black87),
                   const SizedBox(width: 60),
 
-                  /// 🔹 Кнопка для перехода
+                  /// 🔹 Catalog
                   IconButton(
                     icon: const Icon(
                       Icons.bar_chart,
@@ -326,7 +338,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
 
-          /// ➕ FAB (наполовину в панели)
+          /// ➕ FAB
           Positioned(
             bottom: navBarHeight - fabRadius,
             left: 0,
