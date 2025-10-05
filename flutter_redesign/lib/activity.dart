@@ -27,7 +27,8 @@ class _ActivityPageState extends State<ActivityPage> {
           ),
 
           SafeArea(
-            child: Padding(
+            child: SingleChildScrollView(
+              // 👈 Добавлен скролл
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +55,7 @@ class _ActivityPageState extends State<ActivityPage> {
                       const Text(
                         "Activity",
                         style: TextStyle(
-                          fontSize: 26, // уменьшенный размер
+                          fontSize: 26,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
@@ -156,17 +157,9 @@ class _ActivityPageState extends State<ActivityPage> {
                         ),
                         const SizedBox(height: 14),
 
-                        /// Переключатели Day / Week
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [_buildButton("Day"), _buildButton("Week")],
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        /// Заглушка под будущий график
+                        /// 👇 Теперь график НАД кнопками
                         Container(
-                          height: 160,
+                          height: 100, // уменьшена высота
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
@@ -179,11 +172,19 @@ class _ActivityPageState extends State<ActivityPage> {
                             ),
                           ),
                         ),
+
+                        const SizedBox(height: 14),
+
+                        /// Переключатели Day / Week
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [_buildButton("Day"), _buildButton("Week")],
+                        ),
                       ],
                     ),
                   ),
 
-                  const Spacer(),
+                  const SizedBox(height: 30),
 
                   /// 🔹 Подзаголовок Sync
                   const Text(
@@ -241,6 +242,8 @@ class _ActivityPageState extends State<ActivityPage> {
                       ),
                     ],
                   ),
+
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
