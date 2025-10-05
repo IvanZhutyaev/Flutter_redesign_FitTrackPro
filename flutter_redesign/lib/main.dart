@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'catalog.dart';
 import 'profile.dart';
 import 'workouts.dart';
-import 'activity.dart'; // 🔹 добавляем импорт
+import 'activity.dart';
+import 'nutritions.dart';
 
 void main() => runApp(const FitnessApp());
 
@@ -245,38 +246,49 @@ class MainScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 12),
                               // Nutrition
-                              Container(
-                                width: double.infinity,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 6,
-                                      offset: Offset(2, 2),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NutritionScreen(), // переход на экран питания
                                     ),
-                                  ],
-                                ),
-                                child: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.local_pizza,
-                                      size: 36,
-                                      color: Color(0xFFD46C3B),
-                                    ),
-                                    SizedBox(height: 14),
-                                    Text(
-                                      'Nutrition',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6,
+                                        offset: Offset(2, 2),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.local_pizza,
+                                        size: 36,
+                                        color: Color(0xFFD46C3B),
+                                      ),
+                                      SizedBox(height: 14),
+                                      Text(
+                                        'Nutrition',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
