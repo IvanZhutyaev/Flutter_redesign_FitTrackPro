@@ -18,7 +18,7 @@ class NutritionScreen extends StatelessWidget {
 
           // Main content
           SafeArea(
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +37,7 @@ class NutritionScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       const Icon(
-                        Icons.apple, // работает в последних версиях Flutter
+                        Icons.apple,
                         color: Color(0xFFFF7A00),
                         size: 28,
                       ),
@@ -55,32 +55,11 @@ class NutritionScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Food Diary card
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF6D8),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
+                  _NutritionCard(
+                    title: "Food Diary",
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Food Diary",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
@@ -102,6 +81,7 @@ class NutritionScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: const EdgeInsets.symmetric(vertical: 14),
+                              elevation: 2,
                             ),
                             child: const Text(
                               "+ Add Food Entry",
@@ -115,35 +95,15 @@ class NutritionScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 24),
 
                   // Water Balance card
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF6D8),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
+                  _NutritionCard(
+                    title: "Water Balance",
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Water Balance",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
@@ -166,6 +126,7 @@ class NutritionScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: const EdgeInsets.symmetric(vertical: 14),
+                              elevation: 2,
                             ),
                             child: const Text(
                               "+ Add Water",
@@ -179,6 +140,24 @@ class NutritionScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  const SizedBox(height: 24),
+
+                  // 💧 Info block
+                  _NutritionCard(
+                    title: "Why Water Balance Matters 💧",
+                    child: const Text(
+                      "Maintaining proper hydration supports metabolism, improves focus, "
+                      "aids digestion, and helps regulate body temperature. "
+                      "Even mild dehydration can reduce energy and performance, "
+                      "so make sure to drink water consistently throughout the day!",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -189,7 +168,49 @@ class NutritionScreen extends StatelessWidget {
   }
 }
 
-// Helper widgets
+// 🔸 Универсальный вид карточки
+class _NutritionCard extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  const _NutritionCard({required this.title, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF6D8),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.12),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 12),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+// 🔸 Элемент для нутриентов
 class _NutritionItem extends StatelessWidget {
   final String title;
   final String value;
@@ -221,6 +242,7 @@ class _NutritionItem extends StatelessWidget {
   }
 }
 
+// 🔸 Элемент для воды
 class _WaterItem extends StatelessWidget {
   final String title;
   final String value;
