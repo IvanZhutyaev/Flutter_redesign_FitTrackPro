@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          /// 📷 ФОНОВОЕ ФОТО
+          /// 📷 ФОНОВОЕ ИЗОБРАЖЕНИЕ
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -41,7 +41,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
 
-          /// Контент
+          /// КОНТЕНТ
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
@@ -334,13 +334,28 @@ class MainScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Icon(Icons.home, size: 32, color: Colors.black87),
-                  const SizedBox(width: 60),
-
-                  /// 🔹 Catalog
+                  /// 🟠 Левая иконка — bar_chart (вместо домика)
                   IconButton(
                     icon: const Icon(
                       Icons.bar_chart,
+                      size: 32,
+                      color: Colors.black87,
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainScreen()),
+                      );
+                    },
+                  ),
+
+                  const SizedBox(width: 60),
+
+                  /// 🔹 Правая иконка — меню (три полоски)
+                  IconButton(
+                    icon: const Icon(
+                      Icons.menu,
                       size: 32,
                       color: Colors.black87,
                     ),
