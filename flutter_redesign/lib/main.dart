@@ -106,7 +106,7 @@ class MainScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
 
-                  // Кнопка Start Workout (теперь открывает каталог)
+                  // Кнопка Start Workout
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -358,7 +358,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
 
-          /// ➕ FAB — открывает модалку создания тренировки
+          /// ➕ FAB по центру
           Positioned(
             bottom: navBarHeight - fabRadius,
             left: 0,
@@ -369,7 +369,7 @@ class MainScreen extends StatelessWidget {
                 height: fabDiameter,
                 child: FloatingActionButton(
                   onPressed: () {
-                    _showCreateWorkoutModal(context);
+                    _showCreateWorkoutDialog(context);
                   },
                   backgroundColor: const Color(0xFF446E67),
                   shape: const CircleBorder(),
@@ -383,132 +383,191 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  /// 💪 Модалка создания тренировки
-  void _showCreateWorkoutModal(BuildContext context) {
+  /// 🌟 Диалог создания тренировки
+  void _showCreateWorkoutDialog(BuildContext context) {
     String workoutName = '';
     String selectedType = 'Strength';
     int duration = 30;
 
-    showModalBottomSheet(
+    showGeneralDialog(
       context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
-          child: StatefulBuilder(
-            builder: (context, setState) {
-              return Wrap(
-                children: [
-                  const Center(
-                    child: Text(
-                      "Create Workout",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+      barrierDismissible: true,
+      barrierLabel: "Create Workout",
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation1, animation2) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFDFBF7),
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Название тренировки
-                  TextField(
-                    decoration: const InputDecoration(
-                      labelText: "Workout Name",
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) => workoutName = value,
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Тип тренировки
-                  DropdownButtonFormField<String>(
-                    value: selectedType,
-                    items: const [
-                      DropdownMenuItem(value: "Strength", child: Text("Strength")),
-                      DropdownMenuItem(value: "Cardio", child: Text("Cardio")),
-                      DropdownMenuItem(value: "Yoga", child: Text("Yoga")),
-                      DropdownMenuItem(value: "Stretching", child: Text("Stretching")),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        selectedType = value!;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: "Workout Type",
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Продолжительность
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "Duration: $duration min",
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (duration > 5) duration -= 5;
-                          });
-                        },
-                        icon: const Icon(Icons.remove_circle_outline),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            duration += 5;
-                          });
-                        },
-                        icon: const Icon(Icons.add_circle_outline),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Кнопка "Создать тренировку"
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "✅ Workout '$workoutName' ($selectedType, $duration min) created!"),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF446E67),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        "Create Workout",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                 ],
-              );
-            },
+              ),
+              child: StatefulBuilder(
+                builder: (context, setState) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Create Workout",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF446E67),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Название тренировки
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: "Workout Name",
+                          labelStyle: const TextStyle(color: Colors.black87),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xFFD49A5D)),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        onChanged: (value) => workoutName = value,
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Тип тренировки
+                      DropdownButtonFormField<String>(
+                        value: selectedType,
+                        decoration: InputDecoration(
+                          labelText: "Workout Type",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xFFD49A5D)),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        items: const [
+                          DropdownMenuItem(value: "Strength", child: Text("Strength")),
+                          DropdownMenuItem(value: "Cardio", child: Text("Cardio")),
+                          DropdownMenuItem(value: "Yoga", child: Text("Yoga")),
+                          DropdownMenuItem(value: "Stretching", child: Text("Stretching")),
+                        ],
+                        onChanged: (value) {
+                          setState(() => selectedType = value!);
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Продолжительность
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (duration > 5) duration -= 5;
+                              });
+                            },
+                            icon: const Icon(Icons.remove_circle_outline),
+                          ),
+                          Text(
+                            "$duration min",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                duration += 5;
+                              });
+                            },
+                            icon: const Icon(Icons.add_circle_outline),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Кнопки действий
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey[300],
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text(
+                                "Cancel",
+                                style: TextStyle(
+                                    color: Colors.black87, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: const Color(0xFF446E67),
+                                    content: Text(
+                                      "✅ Workout '$workoutName' ($selectedType, $duration min) created!",
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFD49A5D),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text(
+                                "Create",
+                                style: TextStyle(color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return FadeTransition(
+          opacity: CurvedAnimation(parent: anim1, curve: Curves.easeOut),
+          child: ScaleTransition(
+            scale: CurvedAnimation(parent: anim1, curve: Curves.easeOutBack),
+            child: child,
           ),
         );
       },
