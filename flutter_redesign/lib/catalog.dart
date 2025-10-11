@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'progress.dart'; // Подключаем экран Progress
+import 'progress.dart'; // Экран Progress
+import 'settings.dart'; // Экран Settings
 
 class CatalogPage extends StatelessWidget {
   const CatalogPage({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class CatalogPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
 
-                            /// >>> Карточка PROGRESS с переходом на ProgressScreen <<<
+                            /// >>> Карточка PROGRESS <<<
                             _CatalogCard(
                               icon: Icons.timeline,
                               title: "Progress",
@@ -86,11 +87,21 @@ class CatalogPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
 
-                            const _CatalogCard(
+                            /// >>> Карточка SETTINGS <<<
+                            _CatalogCard(
                               icon: Icons.settings,
                               title: "Settings",
                               subtitle: "App preferences and configuration",
                               iconColor: Colors.blue,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SettingsPage(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
