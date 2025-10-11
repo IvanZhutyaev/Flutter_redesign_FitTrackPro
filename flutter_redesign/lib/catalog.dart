@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'progress.dart'; // Подключаем экран Progress
 
 class CatalogPage extends StatelessWidget {
   const CatalogPage({Key? key}) : super(key: key);
@@ -37,43 +38,55 @@ class CatalogPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
-                          children: const [
-                            _CatalogCard(
+                          children: [
+                            const _CatalogCard(
                               icon: Icons.person,
                               title: "Profile",
                               subtitle: "Personal data, goals, avatar",
                               iconColor: Colors.amber,
                             ),
-                            SizedBox(height: 12),
-                            _CatalogCard(
+                            const SizedBox(height: 12),
+                            const _CatalogCard(
                               icon: Icons.fitness_center,
                               title: "Workouts",
                               subtitle: "Exercise catalog, create programs",
                               iconColor: Colors.orange,
                             ),
-                            SizedBox(height: 12),
-                            _CatalogCard(
+                            const SizedBox(height: 12),
+                            const _CatalogCard(
                               icon: Icons.directions_walk,
                               title: "Activity",
                               subtitle: "Step counting, activity charts",
                               iconColor: Colors.green,
                             ),
-                            SizedBox(height: 12),
-                            _CatalogCard(
+                            const SizedBox(height: 12),
+                            const _CatalogCard(
                               icon: Icons.restaurant,
                               title: "Nutrition",
                               subtitle: "Food diary, calorie calculation",
                               iconColor: Colors.red,
                             ),
-                            SizedBox(height: 12),
+                            const SizedBox(height: 12),
+
+                            /// >>> Карточка PROGRESS с переходом на ProgressScreen <<<
                             _CatalogCard(
                               icon: Icons.timeline,
                               title: "Progress",
                               subtitle: "Track your fitness progress",
                               iconColor: Colors.purple,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProgressScreen(),
+                                  ),
+                                );
+                              },
                             ),
-                            SizedBox(height: 12),
-                            _CatalogCard(
+                            const SizedBox(height: 12),
+
+                            const _CatalogCard(
                               icon: Icons.settings,
                               title: "Settings",
                               subtitle: "App preferences and configuration",
@@ -117,7 +130,7 @@ class CatalogPage extends StatelessWidget {
                   bottom: 20,
                   child: ClipOval(
                     child: Material(
-                      color: Colors.white.withOpacity(0.95), // светлый фон
+                      color: Colors.white.withOpacity(0.95),
                       elevation: 6,
                       child: InkWell(
                         onTap: () {
@@ -128,11 +141,11 @@ class CatalogPage extends StatelessWidget {
                           );
                         },
                         child: const SizedBox(
-                          width: 64, // больше чем стандартная FAB
+                          width: 64,
                           height: 64,
                           child: Icon(
                             Icons.smart_toy,
-                            color: Colors.deepPurple, // фиолетовый акцент
+                            color: Colors.deepPurple,
                             size: 36,
                           ),
                         ),
@@ -149,12 +162,13 @@ class CatalogPage extends StatelessWidget {
   }
 }
 
-/// Виджет карточки
+/// Виджет карточки каталога
 class _CatalogCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
   final Color iconColor;
+  final VoidCallback? onTap;
 
   const _CatalogCard({
     Key? key,
@@ -162,40 +176,45 @@ class _CatalogCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.iconColor,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black.withOpacity(0.2)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 30, color: iconColor),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black.withOpacity(0.2)),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 30, color: iconColor),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-              ],
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 12, color: Colors.black54),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
