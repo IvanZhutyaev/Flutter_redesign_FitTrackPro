@@ -4,6 +4,7 @@ import 'profile.dart';
 import 'workouts.dart';
 import 'activity.dart';
 import 'nutritions.dart';
+import 'step_service.dart';
 
 void main() => runApp(const FitnessApp());
 
@@ -19,8 +20,58 @@ class FitnessApp extends StatelessWidget {
   }
 }
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final StepService _stepService = StepService();
+  int _steps = 0;
+  bool _isLoading = true;
+  String _error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeStepTracking();
+  }
+
+  Future<void> _initializeStepTracking() async {
+    try {
+      await _stepService.initialize();
+
+      _startStepUpdates();
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _startStepUpdates() {
+    Future.delayed(const Duration(seconds: 1), () {
+      if (mounted) {
+        setState(() {
+          _steps = _stepService.steps;
+        });
+        _startStepUpdates();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _stepService.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +195,7 @@ class MainScreen extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Steps карточка
+                        // Steps карточка - ОБНОВЛЕННАЯ
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -169,33 +220,75 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.circle,
-                                    size: 36,
-                                    color: Color(0xFFD46C3B),
-                                  ),
-                                  SizedBox(height: 14),
-                                  Text(
-                                    '7,120',
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(height: 6),
-                                  Text(
-                                    'steps',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: _isLoading
+                                  ? const Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          color: Color(0xFFD46C3B),
+                                        ),
+                                        SizedBox(height: 14),
+                                        Text(
+                                          'Loading steps...',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : _error.isNotEmpty
+                                      ? Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.error_outline,
+                                              size: 36,
+                                              color: Colors.red,
+                                            ),
+                                            const SizedBox(height: 14),
+                                            Text(
+                                              'Error: $_error',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.red,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            const SizedBox(height: 10),
+                                            ElevatedButton(
+                                              onPressed: _initializeStepTracking,
+                                              child: const Text('Retry'),
+                                            ),
+                                          ],
+                                        )
+                                      : Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.directions_walk,
+                                              size: 36,
+                                              color: Color(0xFFD46C3B),
+                                            ),
+                                            const SizedBox(height: 14),
+                                            Text(
+                                              _formatSteps(_steps),
+                                              style: const TextStyle(
+                                                fontSize: 32,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 6),
+                                            const Text(
+                                              'steps',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                             ),
                           ),
                         ),
@@ -211,8 +304,7 @@ class MainScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WorkoutsPage(),
+                                      builder: (context) => const WorkoutsPage(),
                                     ),
                                   );
                                 },
@@ -259,8 +351,7 @@ class MainScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const NutritionScreen(),
+                                      builder: (context) => const NutritionScreen(),
                                     ),
                                   );
                                 },
@@ -395,6 +486,13 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  String _formatSteps(int steps) {
+    return steps.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]},',
     );
   }
 
